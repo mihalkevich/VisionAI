@@ -64,4 +64,39 @@
     background-image: none;
     background-attachment: fixed;
   }
+
+  h1 {
+    @apply text-h1-spec font-medium;
+  }
+  h2 {
+    @apply text-h2-spec font-semibold;
+  }
+  h3 {
+    @apply text-h3-spec font-semibold;
+  }
+}
+
+@layer components {
+  .text-large-bold {
+    @apply text-large-bold-spec font-bold;
+  }
+  .text-large-semibold {
+    @apply text-large-semibold-spec font-semibold;
+  }
+  .text-caption {
+    @apply text-caption-spec font-normal;
+  }
+  .text-small-bold {
+    @apply text-small-bold-spec font-bold;
+  }
+
+  .btn-style1 { /* For Button 1 text style */
+    @apply text-button1-spec font-semibold;
+  }
+  .btn-style2 { /* For Button 2 text style */
+    @apply text-button2-spec font-semibold;
+  }
+  .btn-style3 { /* For Button 3 text style */
+    @apply text-button3-spec font-semibold;
+  }
 }
