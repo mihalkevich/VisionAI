@@ -4,92 +4,54 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* #FAFAFA */
-    --foreground: 248 16% 13%; /* #1E1C28 */
+    --background: 270 12% 8%; /* Very dark purple/charcoal */
+    --foreground: 270 10% 90%; /* Light grey/off-white */
 
-    --card: 0 0% 100%;
-    --card-foreground: 248 16% 13%;
+    --card: 270 10% 12%; /* Slightly lighter than background */
+    --card-foreground: 270 10% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 248 16% 13%;
+    --popover: 270 10% 12%;
+    --popover-foreground: 270 10% 90%;
 
-    --primary: 261 51% 50%; /* Deep Purple #673AB7 */
+    --primary: 265 80% 65%; /* Vibrant purple */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 261 50% 92%; /* Light Purple */
-    --secondary-foreground: 261 51% 40%; /* Darker Purple */
+    --secondary: 270 15% 25%; /* Muted purple for less emphasis */
+    --secondary-foreground: 270 10% 70%;
 
-    --muted: 0 0% 94%; /* Light Gray */
-    --muted-foreground: 0 0% 40%; /* Medium Gray */
+    --muted: 270 10% 20%;
+    --muted-foreground: 270 10% 50%;
 
-    --accent: 174 100% 29%; /* Teal #009688 */
-    --accent-foreground: 0 0% 100%; /* White */
-
-    --destructive: 4 65% 42%; /* #B12F26 */
-    --destructive-foreground: 0 0% 100%; /* White */
-
-    --border: 261 30% 88%; /* Light Purple/Grayish Border */
-    --input: 261 30% 92%; /* Light Purple/Grayish Input Background */
-    --ring: 174 100% 29%; /* Teal #009688 for focus rings */
-
-    --radius: 0.5rem;
-
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-
-    /* Sidebar specific colors - adjust if sidebar is used extensively, or simplify */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 261 51% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 174 100% 29%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 261 30% 88%;
-    --sidebar-ring: 174 100% 29%;
-  }
-
-  .dark {
-    --background: 248 16% 13%; /* #1E1C28 */
-    --foreground: 0 0% 98%; /* #FAFAFA */
-
-    --card: 248 16% 10%; /* Slightly darker than background */
-    --card-foreground: 0 0% 98%;
-
-    --popover: 248 16% 10%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 261 51% 60%; /* Lighter Deep Purple */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 261 40% 25%; /* Darker Light Purple */
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 4% 18%; /* Dark Gray */
-    --muted-foreground: 0 0% 60%; /* Lighter Gray for muted text */
-
-    --accent: 174 100% 35%; /* Lighter Teal */
+    --accent: 265 80% 65%; /* Same as primary */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 4 65% 52%; /* Lighter Red */
+    --destructive: 4 70% 55%; /* Adjusted for dark theme */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 267 23% 23%; /* Dark 3 #382D4A */
-    --input: 267 23% 28%; /* Slightly lighter than border for dark */
-    --ring: 174 100% 35%; /* Lighter Teal for focus rings */
+    --border: 270 10% 20%; /* Subtle border */
+    --input: 270 10% 15%; /* Dark input background */
+    --ring: 265 80% 70%; /* Lighter purple for focus rings */
 
-    /* Sidebar specific colors - dark theme */
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 261 51% 60%;
+    --radius: 0.5rem; /* Keep existing radius or adjust if design implies differently */
+
+    --chart-1: 265 80% 70%;
+    --chart-2: 250 70% 60%;
+    --chart-3: 280 60% 50%;
+    --chart-4: 290 75% 65%;
+    --chart-5: 260 85% 75%;
+
+    /* Sidebar specific colors - will remain but might be unused if no sidebar */
+    --sidebar-background: 270 12% 10%;
+    --sidebar-foreground: 270 10% 85%;
+    --sidebar-primary: 265 80% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 174 100% 35%;
+    --sidebar-accent: 265 80% 65%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 174 100% 35%;
+    --sidebar-border: 270 10% 20%;
+    --sidebar-ring: 265 80% 70%;
   }
+
+  /* No separate .dark class needed if dark is the default */
 }
 
 @layer base {
@@ -98,8 +60,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Subtle purple gradient for depth */
-    background-image: linear-gradient(135deg, hsl(261 51% 50% / 0.03) 0%, transparent 50%);
+    /* Remove previous gradient */
+    background-image: none;
     background-attachment: fixed;
   }
 }

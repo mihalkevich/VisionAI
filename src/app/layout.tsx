@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'VisionAI Studio',
-  description: 'Generate stunning images with AI',
+  title: 'Artifex - AI Powered Imagery',
+  description: 'Experience the Future of AI-Powered Imagery',
 };
 
 export default function RootLayout({
@@ -13,11 +16,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+        {/* Manrope is already in tailwind.config.ts, google font link can be removed if not explicitly used elsewhere */}
       </head>
       <body className="font-body antialiased">
         {children}

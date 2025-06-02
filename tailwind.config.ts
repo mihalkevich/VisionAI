@@ -1,17 +1,27 @@
 import type {Config} from 'tailwindcss';
 
 export default {
-  darkMode: ['class'],
+  darkMode: 'class', // Keep dark mode enabled via class
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: { // Add container default settings
+      center: true,
+      padding: {
+        DEFAULT: '1rem', // Default padding for containers
+        sm: '1rem', 
+        // md: '1.5rem', // mobile already has px-4 (1rem)
+        // lg: '2rem', // Adjusted in specific page layouts if needed
+        // xl: '2rem',
+      },
+    },
     extend: {
       fontFamily: {
-        body: ['Manrope', 'sans-serif'],
-        headline: ['Manrope', 'sans-serif'],
+        body: ['var(--font-inter)', 'Manrope', 'sans-serif'], // Use Inter as primary
+        headline: ['var(--font-inter)', 'Manrope', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -70,6 +80,11 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        xl: 'calc(var(--radius) + 4px)', // For more rounded elements like buttons if needed
+        full: '9999px', // For pill-shaped buttons
+      },
+      boxShadow: { // Add custom shadows
+        'top-md': '0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1)',
       },
       keyframes: {
         'accordion-down': {
