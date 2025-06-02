@@ -42,7 +42,7 @@ export default function ImageCard({ image }: ImageCardProps) {
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           data-ai-hint={image.dataAiHint || "abstract art"}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
         />
       </CardContent>
       <CardFooter className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pt-4">
