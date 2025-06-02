@@ -31,9 +31,9 @@ export default function ImageCard({ image, variant = "medium", className }: Imag
   const cardStyle = cn(
     "overflow-hidden shadow-lg hover:shadow-primary/20 transition-shadow duration-300 bg-card rounded-lg group",
     {
-      "aspect-[3/4]": variant === "small", // For portrait-like trend styles
-      "aspect-video": variant === "medium" || variant === "large", // For templates and explore items
-      "aspect-square": variant === "square", // For profile grid
+      "aspect-[3/4]": variant === "small",     // Portrait (longer) - e.g., for trend styles
+      "aspect-[4/3]": variant === "medium" || variant === "large", // Standard 4:3
+      "aspect-square": variant === "square",   // Square - e.g., for profile grid
     },
     className
   );
@@ -46,8 +46,8 @@ export default function ImageCard({ image, variant = "medium", className }: Imag
   const imageSizes = 
     variant === "small" ? "(max-width: 639px) 30vw, 150px" :
     variant === "square" ? "(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 200px" :
-    variant === "medium" ? "(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 250px" :
-    variant === "large" ? "100vw" : // Default for full-width community posts for example
+    variant === "medium" ? "(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 250px" : // Will adapt to 4:3
+    variant === "large" ? "100vw" : // Will adapt to 4:3, for full-width community posts for example
     "100vw";
 
 
@@ -79,7 +79,8 @@ export default function ImageCard({ image, variant = "medium", className }: Imag
   return (
     <Card className={cardStyle}>
       <CardContent className="p-0">
-        <div className="aspect-video relative overflow-hidden">
+        {/* The div below will now also be aspect-[4/3] due to cardStyle applying to parent */}
+        <div className="relative w-full h-full overflow-hidden"> 
             <NextImage
             src={image.imageUrl}
             alt={image.prompt}
