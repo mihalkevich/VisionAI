@@ -7,32 +7,35 @@
     --background: 270 12% 8%; /* Very dark purple/charcoal */
     --foreground: 270 10% 90%; /* Light grey/off-white */
 
-    --card: 270 10% 12%; /* Slightly lighter than background */
+    --card: 270 10% 12%; /* Slightly lighter than background for cards */
     --card-foreground: 270 10% 90%;
 
-    --popover: 270 10% 12%;
+    --popover: 270 10% 10%; /* Darker for popovers */
     --popover-foreground: 270 10% 90%;
 
-    --primary: 265 80% 65%; /* Vibrant purple */
-    --primary-foreground: 0 0% 100%; /* White */
+    --primary: 265 80% 65%; /* Vibrant purple for primary actions */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
 
     --secondary: 270 15% 25%; /* Muted purple for less emphasis */
     --secondary-foreground: 270 10% 70%;
 
-    --muted: 270 10% 20%;
-    --muted-foreground: 270 10% 50%;
+    --muted: 270 10% 20%; /* For subtle backgrounds or dividers */
+    --muted-foreground: 270 10% 55%; /* For placeholder text or less important info */
 
-    --accent: 265 80% 65%; /* Same as primary */
+    --accent: 265 80% 65%; /* Can be same as primary or a different highlight */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 4 70% 55%; /* Adjusted for dark theme */
+    --destructive: 4 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 10% 20%; /* Subtle border */
+    --border: 270 10% 22%; /* Slightly more visible border */
     --input: 270 10% 15%; /* Dark input background */
     --ring: 265 80% 70%; /* Lighter purple for focus rings */
 
-    --radius: 0.5rem; /* Keep existing radius or adjust if design implies differently */
+    --radius: 0.75rem; /* Default border radius for cards, buttons (medium rounded) */
+    /* --radius-sm: 0.5rem; /* Slightly less rounded */
+    /* --radius-lg: 1rem; /* More rounded */
+
 
     --chart-1: 265 80% 70%;
     --chart-2: 250 70% 60%;
@@ -40,7 +43,7 @@
     --chart-4: 290 75% 65%;
     --chart-5: 260 85% 75%;
 
-    /* Sidebar specific colors - will remain but might be unused if no sidebar */
+    /* Sidebar specific colors - not prominent in this design, but keeping for completeness */
     --sidebar-background: 270 12% 10%;
     --sidebar-foreground: 270 10% 85%;
     --sidebar-primary: 265 80% 65%;
@@ -50,8 +53,6 @@
     --sidebar-border: 270 10% 20%;
     --sidebar-ring: 265 80% 70%;
   }
-
-  /* No separate .dark class needed if dark is the default */
 }
 
 @layer base {
@@ -60,43 +61,55 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Remove previous gradient */
+    /* Ensure no previous gradients or complex backgrounds interfere */
     background-image: none;
-    background-attachment: fixed;
   }
 
-  h1 {
-    @apply text-h1-spec font-medium;
+  h1 { /* Base H1 style based on new design's visual hierarchy */
+    @apply text-xl font-medium; /* Adjusted from previous spec to match visual */
   }
-  h2 {
-    @apply text-h2-spec font-semibold;
+  h2 { /* Base H2 style */
+    @apply text-lg font-semibold; /* Adjusted */
   }
-  h3 {
-    @apply text-h3-spec font-semibold;
+  h3 { /* Base H3 style */
+    @apply text-base font-semibold; /* Adjusted */
+  }
+
+  /* Custom typography classes based on previous request, adjusted for new design */
+  .text-h1-spec { @apply text-[14px] leading-[1.3] tracking-[0em] font-medium; }
+  .text-h2-spec { @apply text-[12px] leading-[1.26] tracking-[-0.01em] font-semibold; }
+  .text-h3-spec { @apply text-[10px] leading-[1.22] tracking-[-0.01em] font-semibold; }
+  .text-large-bold-spec { @apply text-[9px] leading-[1.48] tracking-[0em] font-bold; }
+  .text-large-semibold-spec { @apply text-[9px] leading-[1.23] tracking-[-0.01em] font-semibold; }
+  .text-caption-spec { @apply text-[7px] leading-[1.4] tracking-[0.02em] font-normal; } /* Was Regular */
+  .text-small-bold-spec { @apply text-[7px] leading-[1.48] tracking-[0em] font-bold; }
+  
+  .btn-style1-spec { @apply text-[8px] leading-[1.26] tracking-[0em] font-semibold; }
+  .btn-style2-spec { @apply text-[7px] leading-[1.26] tracking-[0em] font-semibold; }
+  .btn-style3-spec { @apply text-[6px] leading-[1.26] tracking-[0em] font-semibold; }
+
+  /* Add specific input styling if needed globally */
+  .form-input {
+    @apply bg-input border-border placeholder-muted-foreground focus:ring-primary rounded-lg text-sm h-11 px-4;
+  }
+  .form-label {
+    @apply text-xs text-muted-foreground mb-1 block;
   }
 }
 
-@layer components {
-  .text-large-bold {
-    @apply text-large-bold-spec font-bold;
-  }
-  .text-large-semibold {
-    @apply text-large-semibold-spec font-semibold;
-  }
-  .text-caption {
-    @apply text-caption-spec font-normal;
-  }
-  .text-small-bold {
-    @apply text-small-bold-spec font-bold;
-  }
-
-  .btn-style1 { /* For Button 1 text style */
-    @apply text-button1-spec font-semibold;
-  }
-  .btn-style2 { /* For Button 2 text style */
-    @apply text-button2-spec font-semibold;
-  }
-  .btn-style3 { /* For Button 3 text style */
-    @apply text-button3-spec font-semibold;
-  }
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background) / 0.5);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.7);
 }

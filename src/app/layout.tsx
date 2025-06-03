@@ -3,7 +3,11 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const inter = Inter({ 
+  subsets: ['latin', 'cyrillic'], // Added cyrillic
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Artifex - AI Powered Imagery',
@@ -18,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
       <head>
-        {/* Manrope is already in tailwind.config.ts, google font link can be removed if not explicitly used elsewhere */}
+        {/* Manrope font link can be removed as Inter is primary and Manrope is fallback via Tailwind config */}
       </head>
-      <body className="font-body antialiased">
+      <body className="font-body antialiased bg-background text-foreground">
         {children}
         <Toaster />
       </body>

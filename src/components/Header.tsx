@@ -1,7 +1,5 @@
-// This file is no longer used by the main app layout and can be deleted or kept for other purposes.
-// For now, I will empty it to prevent accidental usage.
-// Page-specific headers will be handled within each page component.
-
+// This file is not used by the main app layout in the new design.
+// It can be deleted. For now, emptying it.
 export default function Header() {
   return null;
 }

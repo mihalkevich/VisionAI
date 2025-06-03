@@ -8,7 +8,7 @@ export default function AppLayout({
 }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-grow pb-16"> {/* Add padding-bottom to avoid overlap with nav bar */}
+      <main className="flex-grow pb-20 md:pb-0"> {/* Adjust padding for bottom nav only on mobile */}
         {children}
       </main>
       <BottomNavigationBar />

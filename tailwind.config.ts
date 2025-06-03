@@ -1,40 +1,43 @@
 import type {Config} from 'tailwindcss';
 
 export default {
-  darkMode: 'class', // Keep dark mode enabled via class
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    container: { // Add container default settings
+    container: { 
       center: true,
       padding: {
-        DEFAULT: '1rem', // Default padding for containers
+        DEFAULT: '1rem', 
         sm: '1rem', 
-        // md: '1.5rem', // mobile already has px-4 (1rem)
-        // lg: '2rem', // Adjusted in specific page layouts if needed
-        // xl: '2rem',
       },
     },
     extend: {
       fontFamily: {
-        body: ['var(--font-inter)', 'Manrope', 'sans-serif'], // Use Inter as primary
+        body: ['var(--font-inter)', 'Manrope', 'sans-serif'], 
         headline: ['var(--font-inter)', 'Manrope', 'sans-serif'],
         code: ['monospace'],
+        // Satoshi would be defined here if it could be added, e.g., satoshi: ['Satoshi', 'sans-serif'],
       },
       fontSize: {
-        'h1-spec': ['0.875rem', { lineHeight: '1.3', letterSpacing: '0em' }], // 14px (was 28px)
-        'h2-spec': ['0.75rem', { lineHeight: '1.26', letterSpacing: '-0.01em' }], // 12px (was 24px)
-        'h3-spec': ['0.625rem', { lineHeight: '1.22', letterSpacing: '-0.01em' }], // 10px (was 20px)
-        'large-bold-spec': ['0.5625rem', { lineHeight: '1.48', letterSpacing: '0em' }], // 9px (was 18px)
-        'large-semibold-spec': ['0.5625rem', { lineHeight: '1.23', letterSpacing: '-0.01em' }], // 9px (was 18px)
-        'caption-spec': ['0.4375rem', { lineHeight: '1.4', letterSpacing: '0.02em' }], // 7px (was 13px)
-        'small-bold-spec': ['0.4375rem', { lineHeight: '1.48', letterSpacing: '0em' }], // 7px (was 14px)
-        'button1-spec': ['0.5rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 8px (was 16px)
-        'button2-spec': ['0.4375rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 7px (was 14px)
-        'button3-spec': ['0.375rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 6px (was 12px)
+        // Keeping previously halved sizes as a baseline for the new compact design
+        'h1-spec': ['14px', { lineHeight: '1.3', letterSpacing: '0em' }],
+        'h2-spec': ['12px', { lineHeight: '1.26', letterSpacing: '-0.01em' }],
+        'h3-spec': ['10px', { lineHeight: '1.22', letterSpacing: '-0.01em' }],
+        'large-bold-spec': ['9px', { lineHeight: '1.48', letterSpacing: '0em' }],
+        'large-semibold-spec': ['9px', { lineHeight: '1.23', letterSpacing: '-0.01em' }],
+        'caption-spec': ['7px', { lineHeight: '1.4', letterSpacing: '0.02em' }],
+        'small-bold-spec': ['7px', { lineHeight: '1.48', letterSpacing: '0em' }],
+        'button1-spec': ['8px', { lineHeight: '1.26', letterSpacing: '0em' }],
+        'button2-spec': ['7px', { lineHeight: '1.26', letterSpacing: '0em' }],
+        'button3-spec': ['6px', { lineHeight: '1.26', letterSpacing: '0em' }],
+
+        // Added a few more general purpose sizes reflecting the design
+        '2xs': '0.625rem', // 10px
+        '3xs': '0.5rem',   // 8px
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -88,15 +91,17 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-        xl: 'calc(var(--radius) + 4px)', // For more rounded elements like buttons if needed
-        full: '9999px', // For pill-shaped buttons
+      borderRadius: { // Updated border radius based on new design
+        lg: 'var(--radius)', // 0.75rem - for larger cards, modal like elements
+        md: 'calc(var(--radius) - 0.25rem)', // 0.5rem - for buttons, inputs
+        sm: 'calc(var(--radius) - 0.375rem)', // 0.375rem - for smaller elements like tags
+        xl: 'calc(var(--radius) + 0.25rem)', // 1rem - more rounded
+        '2xl': 'calc(var(--radius) + 0.75rem)', // 1.5rem - even more rounded (e.g. bottom sheet style)
+        full: '9999px',
       },
-      boxShadow: { // Add custom shadows
+      boxShadow: { 
         'top-md': '0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1)',
+        'primary-glow': '0 0 15px 2px hsl(var(--primary) / 0.3)', // Glow effect for primary elements
       },
       keyframes: {
         'accordion-down': {
@@ -119,6 +124,11 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      aspectRatio: {
+        '4/3': '4 / 3',
+        '3/4': '3 / 4',
+        '16/9': '16 / 9',
       },
     },
   },
