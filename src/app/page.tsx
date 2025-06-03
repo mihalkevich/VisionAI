@@ -56,7 +56,7 @@ const features = [
 export default function LandingPage() {
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col items-center selection:bg-primary selection:text-primary-foreground">
-      <main className="w-full max-w-5xl pb-28"> {/* Added pb-28 for sticky bar spacing */}
+      <main className="w-full max-w-5xl"> {/* Removed pb-28 */}
         {/* New Hero Section */}
         <section className="w-full">
           <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] md:aspect-[2.5/1] max-h-[500px] overflow-hidden">
@@ -144,30 +144,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md p-3 md:p-4 shadow-top-md">
-        <div className="container mx-auto max-w-xl flex items-center gap-2 md:gap-3">
-          <Input 
-            type="email" 
-            placeholder="Type your email..." 
-            className="flex-grow !h-12 md:!h-14 !rounded-xl bg-white/90 text-black placeholder-neutral-500 border-neutral-300 focus:border-primary focus:ring-primary text-sm md:text-base"
-          />
-          <Button 
-            size="lg" 
-            className="!h-12 md:!h-14 bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-shadow px-4 md:px-6 text-sm md:text-base font-semibold group whitespace-nowrap"
-          >
-            Start your Neon Tokyo Shoot <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-1.5 md:ml-2 transform transition-transform group-hover:translate-x-1" />
-          </Button>
-          <Button 
-            variant="outline" 
-            size="icon" 
-            className="!h-12 !w-12 md:!h-14 md:!w-14 bg-white/20 hover:bg-white/30 border-white/30 text-white rounded-xl"
-            aria-label="Options"
-          >
-            <SlidersHorizontal className="w-5 h-5 md:w-6 md:h-6" />
-          </Button>
-        </div>
-      </div>
+      {/* Sticky Bottom Bar - REMOVED */}
 
       <footer className="bg-black text-neutral-400 text-center py-10 w-full">
         <div className="container mx-auto max-w-5xl px-4">
@@ -180,5 +157,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    
