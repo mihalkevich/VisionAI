@@ -62,7 +62,7 @@ export default function LandingPage() {
         <section className="w-full">
           <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] md:aspect-[2.5/1] max-h-[500px] overflow-hidden">
             <NextImage
-              src="https://placehold.co/1200x600.png" // Placeholder for the hero image
+              src="https://images.unsplash.com/photo-1636690598773-c50645a47aeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhaXxlbnwwfHx8fDE3NDg4ODg2OTR8MA&ixlib=rb-4.1.0&q=80&w=1080" 
               alt="AI generated man"
               layout="fill"
               objectFit="cover"
