@@ -10,7 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const showcaseImages = [
-  { src: "https://placehold.co/600x800.png", alt: "Futuristic portrait", dataAiHint: "futuristic portrait" },
+  { src: "https://images.unsplash.com/photo-1667835949495-78a1ea9ecd77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtaWRqb3VybmV5fGVufDB8fHx8MTc0ODk3ODc0OXww&ixlib=rb-4.1.0&q=80&w=1080", alt: "Futuristic portrait", dataAiHint: "futuristic portrait" },
   { src: "https://placehold.co/600x400.png", alt: "Fantasy landscape", dataAiHint: "fantasy landscape" },
   { src: "https://placehold.co/600x600.png", alt: "Abstract art", dataAiHint: "abstract art" },
   { src: "https://placehold.co/400x600.png", alt: "Sci-fi character", dataAiHint: "sci-fi character" },
