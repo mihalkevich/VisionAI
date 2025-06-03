@@ -8,14 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Wand2, Sparkles, RefreshCw, Loader2, Info, ChevronLeft, Download, Share2, Image as ImageIcon, AspectRatio, Settings2 } from "lucide-react";
+import { Wand2, Sparkles, RefreshCw, Loader2, Info, ChevronLeft, Download, Share2, Image as ImageIcon, Square, Settings2 } from "lucide-react";
 import { handleImprovePromptAction, handleGenerateVariationsAction } from "@/lib/actions";
 import type { GeneratedImage } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ImageGallery from "@/components/ImageGallery";
 import NextImage from "next/image";
-import SegmentedControl from "@/components/ui/SegmentedControl"; // Assuming SegmentedControl is in ui
+import SegmentedControl from "@/components/ui/SegmentedControl";
 
 const styleOptions = [
   { name: "Note", hint: "illustration", imageUrl: "https://placehold.co/80x80.png?text=Note" , dataAiHint: "illustration style" },
@@ -27,7 +27,7 @@ const styleOptions = [
 ];
 
 const shapeOptions = [
-  { value: "1:1", label: "Square", icon: <AspectRatio className="w-5 h-5" /> },
+  { value: "1:1", label: "Square", icon: <Square className="w-5 h-5" /> },
   { value: "3:4", label: "Portrait", icon: <div className="w-4 h-5 border-2 border-current rounded-sm"></div> },
   { value: "4:3", label: "Landscape", icon: <div className="w-5 h-4 border-2 border-current rounded-sm"></div> },
 ];
