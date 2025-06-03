@@ -1,3 +1,4 @@
+
 // src/app/page.tsx (New Main Landing Page)
 "use client";
 
@@ -11,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const showcaseImages = [
   { src: "https://images.unsplash.com/photo-1667835949495-78a1ea9ecd77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtaWRqb3VybmV5fGVufDB8fHx8MTc0ODk3ODc0OXww&ixlib=rb-4.1.0&q=80&w=1080", alt: "Futuristic portrait", dataAiHint: "futuristic portrait" },
-  { src: "https://placehold.co/600x400.png", alt: "Fantasy landscape", dataAiHint: "fantasy landscape" },
+  { src: "https://images.unsplash.com/photo-1636690581110-a512fed05fd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhaXxlbnwwfHx8fDE3NDg4ODg2OTR8MA&ixlib=rb-4.1.0&q=80&w=1080", alt: "Fantasy landscape", dataAiHint: "fantasy landscape" },
   { src: "https://placehold.co/600x600.png", alt: "Abstract art", dataAiHint: "abstract art" },
   { src: "https://placehold.co/400x600.png", alt: "Sci-fi character", dataAiHint: "sci-fi character" },
   { src: "https://placehold.co/800x600.png", alt: "Detailed object", dataAiHint: "detailed object" },
@@ -157,3 +158,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
