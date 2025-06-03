@@ -25,16 +25,16 @@ export default {
         code: ['monospace'],
       },
       fontSize: {
-        'h1-spec': ['1.75rem', { lineHeight: '1.3', letterSpacing: '0em' }], // 28px, 130%, 0%
-        'h2-spec': ['1.5rem', { lineHeight: '1.26', letterSpacing: '-0.01em' }], // 24px, 126%, -1%
-        'h3-spec': ['1.25rem', { lineHeight: '1.22', letterSpacing: '-0.01em' }], // 20px, 122%, -1%
-        'large-bold-spec': ['1.125rem', { lineHeight: '1.48', letterSpacing: '0em' }], // 18px, 148%, 0%
-        'large-semibold-spec': ['1.125rem', { lineHeight: '1.23', letterSpacing: '-0.01em' }], // 18px, 123%, -1%
-        'caption-spec': ['0.8125rem', { lineHeight: '1.4', letterSpacing: '0.02em' }], // 13px, 140%, 2%
-        'small-bold-spec': ['0.875rem', { lineHeight: '1.48', letterSpacing: '0em' }], // 14px, 148%, 0%
-        'button1-spec': ['1rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 16px, 126%, 0%
-        'button2-spec': ['0.875rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 14px, 126%, 0%
-        'button3-spec': ['0.75rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 12px, 126%, 0%
+        'h1-spec': ['0.875rem', { lineHeight: '1.3', letterSpacing: '0em' }], // 14px (was 28px)
+        'h2-spec': ['0.75rem', { lineHeight: '1.26', letterSpacing: '-0.01em' }], // 12px (was 24px)
+        'h3-spec': ['0.625rem', { lineHeight: '1.22', letterSpacing: '-0.01em' }], // 10px (was 20px)
+        'large-bold-spec': ['0.5625rem', { lineHeight: '1.48', letterSpacing: '0em' }], // 9px (was 18px)
+        'large-semibold-spec': ['0.5625rem', { lineHeight: '1.23', letterSpacing: '-0.01em' }], // 9px (was 18px)
+        'caption-spec': ['0.4375rem', { lineHeight: '1.4', letterSpacing: '0.02em' }], // 7px (was 13px)
+        'small-bold-spec': ['0.4375rem', { lineHeight: '1.48', letterSpacing: '0em' }], // 7px (was 14px)
+        'button1-spec': ['0.5rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 8px (was 16px)
+        'button2-spec': ['0.4375rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 7px (was 14px)
+        'button3-spec': ['0.375rem', { lineHeight: '1.26', letterSpacing: '0em' }], // 6px (was 12px)
       },
       colors: {
         background: 'hsl(var(--background))',

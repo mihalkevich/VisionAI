@@ -39,29 +39,29 @@ const allExploreImages: GeneratedImage[] = categories.flatMap(cat => cat.images)
 
 export default function ExplorePage() {
   return (
-    <div className="container mx-auto px-4 py-6 space-y-8">
+    <div className="container mx-auto px-4 py-6 space-y-6"> {/* Reduced space-y-8 to space-y-6 */}
       <div className="relative">
         <Input
           type="search"
           placeholder="Search for inspiration..."
-          className="pl-10 bg-input border-border focus:ring-primary h-12 text-base"
+          className="pl-10 bg-input border-border focus:ring-primary h-10 text-sm" // h-12 to h-10, text-base to text-sm
         />
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" /> {/* w-5 h-5 to w-4 h-4 */}
       </div>
 
       {categories.map((category) => (
         <section key={category.name}>
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-xl font-semibold">{category.name}</h2>
+          <div className="flex justify-between items-center mb-2.5"> {/* mb-3 to mb-2.5 */}
+            <h2 className="text-lg font-semibold">{category.name}</h2> {/* text-xl to text-lg */}
             <Link href={`/explore/${category.name.toLowerCase()}`} legacyBehavior>
-              <a className="text-sm text-primary hover:underline flex items-center">
-                See All <ChevronRight className="w-4 h-4 ml-1" />
+              <a className="text-xs text-primary hover:underline flex items-center"> {/* text-sm to text-xs */}
+                See All <ChevronRight className="w-3 h-3 ml-1" /> {/* w-4 h-4 to w-3 h-3 */}
               </a>
             </Link>
           </div>
-          <div className="flex overflow-x-auto space-x-3 pb-2 -mx-4 px-4">
+          <div className="flex overflow-x-auto space-x-2.5 pb-1.5 -mx-4 px-4"> {/* space-x-3 to space-x-2.5, pb-2 to pb-1.5 */}
             {category.images.map((image) => (
-              <div key={image.id} className="min-w-[180px] sm:min-w-[220px]">
+              <div key={image.id} className="min-w-[160px] sm:min-w-[200px]"> {/* Reduced min-w */}
                 <ImageCard image={image} variant="medium" />
               </div>
             ))}
@@ -70,8 +70,8 @@ export default function ExplorePage() {
       ))}
       
       <section>
-        <h2 className="text-xl font-semibold mb-3">Discover More</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <h2 className="text-lg font-semibold mb-2.5">Discover More</h2> {/* text-xl to text-lg, mb-3 to mb-2.5 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3"> {/* gap-4 to gap-3 */}
            {allExploreImages.map((image) => (
             <ImageCard key={image.id} image={image} variant="medium" />
           ))}

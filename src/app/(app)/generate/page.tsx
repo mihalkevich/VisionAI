@@ -12,6 +12,7 @@ import { handleImprovePromptAction, handleGenerateVariationsAction } from "@/lib
 import type { GeneratedImage } from "@/types"; // For future use
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import ImageGallery from "@/components/ImageGallery"; // Assuming you want to display images later
 
 export default function GeneratePage() {
   const [originalPrompt, setOriginalPrompt] = useState<string>("");
@@ -22,10 +23,12 @@ export default function GeneratePage() {
   
   const [isImproving, startImproveTransition] = useTransition();
   const [isGeneratingVariations, startVariationsTransition] = useTransition();
-  const [isGeneratingImages, startImageGenerationTransition] = useTransition(); // For future use
+  const [isGeneratingImages, startImageGenerationTransition] = useTransition();
 
   const [errorImprove, setErrorImprove] = useState<string | null>(null);
   const [errorVariations, setErrorVariations] = useState<string | null>(null);
+  
+  const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]); // State for generated images
 
   const { toast } = useToast();
 
@@ -52,7 +55,7 @@ export default function GeneratePage() {
           toast({ title: "Improvement Failed", description: result.improvedPrompt, variant: "destructive" });
         } else {
           setImprovedPromptText(result.improvedPrompt);
-          setDisplayPrompt(result.improvedPrompt); // Automatically use the improved prompt
+          setDisplayPrompt(result.improvedPrompt); 
           toast({ title: "Prompt Improved!", description: "The improved prompt is now ready for generation." });
         }
       } catch (e) {
@@ -105,47 +108,54 @@ export default function GeneratePage() {
       toast({ title: "Prompt is empty", description: "Please enter or select a prompt to generate images.", variant: "destructive" });
       return;
     }
-    // Placeholder for actual image generation logic
     startImageGenerationTransition(async () => {
-      toast({ title: "Generating Images...", description: `Using prompt: "${displayPrompt.substring(0,50)}..."` });
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // In a real scenario, you would call an image generation flow here
-      // and update a state variable with the generated images.
-      toast({ title: "Image Generation Started (Mock)", description: "This is a placeholder action." });
+      toast({ title: "Generating Images...", description: `Using prompt: "${displayPrompt.substring(0,30)}..."` });
+      // Simulate API call for image generation
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      // Mock generated images
+      const mockImages: GeneratedImage[] = Array.from({ length: 2 }, (_, i) => ({
+        id: `gen-${Date.now()}-${i}`,
+        prompt: displayPrompt,
+        imageUrl: `https://placehold.co/400x300.png?text=Generated+${i+1}`,
+        model: "Artifex AI",
+        timestamp: new Date(),
+        dataAiHint: "ai generated"
+      }));
+      setGeneratedImages(mockImages);
+      toast({ title: "Images Generated! (Mock)", description: "Your mock images are ready." });
     });
   };
 
 
   return (
-    <div className="container mx-auto px-4 py-6 space-y-8">
+    <div className="container mx-auto px-4 py-6 space-y-6"> {/* Reduced space-y-8 to space-y-6 */}
       <header className="text-center">
-        <h1 className="text-3xl font-bold flex items-center justify-center">
-          <Wand2 className="w-8 h-8 mr-3 text-primary" />
+        <h1 className="text-xl font-bold flex items-center justify-center"> {/* Reduced from text-3xl */}
+          <Wand2 className="w-6 h-6 mr-2 text-primary" /> {/* Reduced from w-8 h-8 mr-3 */}
           Image Generation Hub
         </h1>
-        <p className="text-muted-foreground mt-1">Craft your vision with AI-powered tools.</p>
+        <p className="text-muted-foreground mt-1 text-xs">Craft your vision with AI-powered tools.</p> {/* text-sm to text-xs */}
       </header>
 
-      <Card className="shadow-xl">
+      <Card className="shadow-lg"> {/* Reduced shadow-xl */}
         <CardHeader>
-          <CardTitle>Describe Your Image</CardTitle>
-          <CardDescription>Enter your prompt below. You can then improve it or generate variations.</CardDescription>
+          <CardTitle className="text-base">Describe Your Image</CardTitle> {/* Reduced text size */}
+          <CardDescription className="text-xs">Enter your prompt below. You can then improve it or generate variations.</CardDescription> {/* Reduced text size */}
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3"> {/* space-y-4 to space-y-3 */}
           <Textarea
-            placeholder="e.g., A futuristic cityscape at sunset, neon lights reflecting on wet streets, cinematic lighting..."
+            placeholder="e.g., A futuristic cityscape at sunset, neon lights..."
             value={originalPrompt}
             onChange={handlePromptChange}
-            rows={4}
-            className="text-base"
+            rows={3} // rows 4 to 3
+            className="text-sm" // text-base to text-sm
           />
           <div className="flex flex-col sm:flex-row gap-2">
-            <Button onClick={onImprovePrompt} disabled={isImproving || !originalPrompt.trim()} className="flex-1">
+            <Button onClick={onImprovePrompt} disabled={isImproving || !originalPrompt.trim()} className="flex-1" size="sm"> {/* Added size="sm" */}
               {isImproving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
               Improve Prompt
             </Button>
-            <Button onClick={onGenerateVariations} disabled={isGeneratingVariations || !originalPrompt.trim()} variant="outline" className="flex-1">
+            <Button onClick={onGenerateVariations} disabled={isGeneratingVariations || !originalPrompt.trim()} variant="outline" className="flex-1" size="sm"> {/* Added size="sm" */}
               {isGeneratingVariations ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
               Generate Variations
             </Button>
@@ -156,21 +166,21 @@ export default function GeneratePage() {
       {errorImprove && (
         <Alert variant="destructive">
           <Info className="h-4 w-4" />
-          <AlertTitle>Improvement Error</AlertTitle>
-          <AlertDescription>{errorImprove}</AlertDescription>
+          <AlertTitle className="text-sm">Improvement Error</AlertTitle> {/* Reduced text size */}
+          <AlertDescription className="text-xs">{errorImprove}</AlertDescription> {/* Reduced text size */}
         </Alert>
       )}
 
       {improvedPromptText && !errorImprove && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Suggested Improvement</CardTitle>
+            <CardTitle className="text-sm">Suggested Improvement</CardTitle> {/* Reduced text size */}
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground italic p-3 bg-muted rounded-md">{improvedPromptText}</p>
+            <p className="text-xs text-muted-foreground italic p-2.5 bg-muted rounded-md">{improvedPromptText}</p> {/* Reduced text, padding */}
           </CardContent>
           <CardFooter>
-             <Button onClick={handleUseImprovedPrompt} variant="link" className="p-0 h-auto">Use this improved prompt</Button>
+             <Button onClick={handleUseImprovedPrompt} variant="link" className="p-0 h-auto text-xs">Use this improved prompt</Button> {/* Reduced text size */}
           </CardFooter>
         </Card>
       )}
@@ -178,21 +188,21 @@ export default function GeneratePage() {
       {errorVariations && (
          <Alert variant="destructive">
           <Info className="h-4 w-4" />
-          <AlertTitle>Variation Error</AlertTitle>
-          <AlertDescription>{errorVariations}</AlertDescription>
+          <AlertTitle className="text-sm">Variation Error</AlertTitle> {/* Reduced text size */}
+          <AlertDescription className="text-xs">{errorVariations}</AlertDescription> {/* Reduced text size */}
         </Alert>
       )}
 
       {promptVariationsList.length > 0 && !errorVariations && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Prompt Variations</CardTitle>
+            <CardTitle className="text-sm">Prompt Variations</CardTitle> {/* Reduced text size */}
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-1.5"> {/* space-y-2 to space-y-1.5 */}
             {promptVariationsList.map((variation, index) => (
-              <div key={index} className="p-3 bg-muted rounded-md flex justify-between items-center">
-                <p className="text-sm italic flex-1">{variation}</p>
-                <Button onClick={() => handleUseVariation(variation)} size="sm" variant="outline" className="ml-2">Use</Button>
+              <div key={index} className="p-2.5 bg-muted rounded-md flex justify-between items-center"> {/* p-3 to p-2.5 */}
+                <p className="text-xs italic flex-1">{variation}</p> {/* text-sm to text-xs */}
+                <Button onClick={() => handleUseVariation(variation)} size="sm" variant="outline" className="ml-2 text-xs">Use</Button> {/* Added text-xs */}
               </div>
             ))}
           </CardContent>
@@ -203,27 +213,26 @@ export default function GeneratePage() {
 
       <Card className="bg-primary/5">
         <CardHeader>
-          <CardTitle>Final Prompt for Generation</CardTitle>
-           <CardDescription>This is the prompt that will be used to generate images. You can edit it directly if needed.</CardDescription>
+          <CardTitle className="text-base">Final Prompt for Generation</CardTitle> {/* Reduced text size */}
+           <CardDescription className="text-xs">This is the prompt that will be used to generate images. You can edit it directly if needed.</CardDescription> {/* Reduced text size */}
         </CardHeader>
         <CardContent>
            <Textarea
             placeholder="Your final prompt will appear here..."
             value={displayPrompt}
             onChange={(e) => setDisplayPrompt(e.target.value)}
-            rows={3}
-            className="text-base bg-background"
+            rows={2} // rows 3 to 2
+            className="text-sm bg-background" // text-base to text-sm
           />
         </CardContent>
       </Card>
 
-      {/* Placeholder for Generation Settings */}
       <Card>
         <CardHeader>
-          <CardTitle>Generation Settings</CardTitle>
-          <CardDescription>Configure your image generation options. (Coming Soon)</CardDescription>
+          <CardTitle className="text-base">Generation Settings</CardTitle> {/* Reduced text size */}
+          <CardDescription className="text-xs">Configure your image generation options. (Coming Soon)</CardDescription> {/* Reduced text size */}
         </CardHeader>
-        <CardContent className="space-y-3 text-muted-foreground">
+        <CardContent className="space-y-2 text-muted-foreground text-xs"> {/* space-y-3 to space-y-2, added text-xs */}
           <p>[Aspect Ratio Controls]</p>
           <p>[Style Selection]</p>
           <p>[Number of Images]</p>
@@ -231,20 +240,16 @@ export default function GeneratePage() {
         </CardContent>
       </Card>
       
-      <div className="mt-6 text-center">
-        <Button size="lg" onClick={handleGenerateImages} disabled={isGeneratingImages || !displayPrompt.trim()} className="w-full max-w-md h-12 text-lg">
-          {isGeneratingImages ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Wand2 className="mr-2 h-5 w-5" />}
+      <div className="mt-4 text-center"> {/* mt-6 to mt-4 */}
+        <Button size="default" onClick={handleGenerateImages} disabled={isGeneratingImages || !displayPrompt.trim()} className="w-full max-w-sm h-10 text-base"> {/* size lg to default, max-w-md to sm, h-12 to h-10, text-lg to text-base */}
+          {isGeneratingImages ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />} {/* h-5 w-5 to h-4 w-4 */}
           Generate Images
         </Button>
       </div>
 
-      {/* Placeholder for Generated Images */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4 text-center">Your Generated Masterpieces</h2>
-        <div className="p-8 bg-card rounded-lg shadow text-center text-muted-foreground min-h-[200px] flex items-center justify-center">
-          Your generated images will appear here.
-        </div>
-        {/* Later: <ImageGallery images={generatedImages} /> */}
+      <div className="mt-6"> {/* mt-8 to mt-6 */}
+        <h2 className="text-lg font-semibold mb-3 text-center">Your Generated Masterpieces</h2> {/* text-xl to text-lg, mb-4 to mb-3 */}
+        <ImageGallery images={generatedImages} />
       </div>
     </div>
   );

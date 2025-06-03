@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input";
 import ImageCard from "@/components/ImageCard";
 import { Sparkles, Wand2, Users, Image as ImageIcon, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-// Mock data - replace with actual data fetching
+
 const trendStyles: GeneratedImage[] = [
   { id: "trend1", prompt: "Cyberpunk Portrait", imageUrl: "https://placehold.co/300x400.png", model: "Midjourney", timestamp: new Date(), dataAiHint: "cyberpunk portrait" },
   { id: "trend2", prompt: "Vintage Photo Effect", imageUrl: "https://placehold.co/300x400.png", model: "OpenAI", timestamp: new Date(), dataAiHint: "vintage photo" },
@@ -32,28 +33,29 @@ const communityInspirations: GeneratedImage[] = [
 
 export default function HomePage() {
   const [prompt, setPrompt] = useState("");
+  const router = useRouter();
 
-  const handleGenerate = () => {
-    // Navigate to generate page with prompt, or handle generation here
-    console.log("Generating image for prompt:", prompt);
-    // For now, just log. Navigation or modal would go here.
+  const handleGenerateClick = () => {
+    // Navigate to generate page with prompt.
+    // For now, a simple navigation. Later, this could pass the prompt via query params or state management.
+    router.push('/generate'); 
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 space-y-8">
+    <div className="container mx-auto px-4 py-6 space-y-6"> {/* space-y-8 to space-y-6 */}
       {/* Image Terminator Section */}
-      <section className="bg-card p-4 rounded-lg shadow-lg">
-        <h2 className="text-xl font-semibold mb-3 flex items-center"><Wand2 className="w-5 h-5 mr-2 text-primary" /> Image Terminator</h2>
-        <p className="text-sm text-muted-foreground mb-3">Turn your ideas into stunning visuals.</p>
-        <div className="flex space-x-2">
+      <section className="bg-card p-3 rounded-lg shadow-md"> {/* p-4 to p-3, shadow-lg to shadow-md */}
+        <h2 className="text-lg font-semibold mb-2 flex items-center"><Wand2 className="w-4 h-4 mr-1.5 text-primary" /> Image Terminator</h2> {/* text-xl to text-lg, w-5h-5 to w-4h-4, mr-2 to mr-1.5, mb-3 to mb-2 */}
+        <p className="text-xs text-muted-foreground mb-2.5">Turn your ideas into stunning visuals.</p> {/* text-sm to text-xs, mb-3 to mb-2.5 */}
+        <div className="flex space-x-1.5"> {/* space-x-2 to space-x-1.5 */}
           <Input
             type="text"
             placeholder="Describe what you want to create..."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="bg-input border-border focus:ring-primary"
+            className="bg-input border-border focus:ring-primary text-sm h-9" // Added text-sm and h-9
           />
-          <Button onClick={handleGenerate} className="bg-primary hover:bg-primary/90 text-primary-foreground">
+          <Button onClick={handleGenerateClick} className="bg-primary hover:bg-primary/90 text-primary-foreground" size="default"> {/* Ensured default size (h-9) */}
             Generate
           </Button>
         </div>
@@ -61,13 +63,13 @@ export default function HomePage() {
 
       {/* Try Trend Styles Section */}
       <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-xl font-semibold flex items-center"><Sparkles className="w-5 h-5 mr-2 text-primary" /> Try Trend Styles</h2>
-          <Link href="/explore/trends" legacyBehavior><a className="text-sm text-primary hover:underline flex items-center">See All <ChevronRight className="w-4 h-4 ml-1" /></a></Link>
+        <div className="flex justify-between items-center mb-2.5"> {/* mb-3 to mb-2.5 */}
+          <h2 className="text-lg font-semibold flex items-center"><Sparkles className="w-4 h-4 mr-1.5 text-primary" /> Try Trend Styles</h2> {/* text-xl to text-lg, w-5h-5 to w-4h-4, mr-2 to mr-1.5 */}
+          <Link href="/explore/trends" legacyBehavior><a className="text-xs text-primary hover:underline flex items-center">See All <ChevronRight className="w-3 h-3 ml-1" /></a></Link> {/* text-sm to text-xs, w-4h-4 to w-3h-3 */}
         </div>
-        <div className="flex overflow-x-auto space-x-4 pb-2 -mx-4 px-4">
+        <div className="flex overflow-x-auto space-x-3 pb-1.5 -mx-4 px-4"> {/* space-x-4 to space-x-3, pb-2 to pb-1.5 */}
           {trendStyles.map((image) => (
-            <div key={image.id} className="min-w-[120px] sm:min-w-[150px]">
+            <div key={image.id} className="min-w-[110px] sm:min-w-[140px]"> {/* Reduced min-w */}
              <ImageCard image={image} variant="small" />
             </div>
           ))}
@@ -76,11 +78,11 @@ export default function HomePage() {
 
       {/* Image Template Section */}
       <section>
-         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-xl font-semibold flex items-center"><ImageIcon className="w-5 h-5 mr-2 text-primary" /> Image Template</h2>
-           <Link href="/explore/templates" legacyBehavior><a className="text-sm text-primary hover:underline flex items-center">See All <ChevronRight className="w-4 h-4 ml-1" /></a></Link>
+         <div className="flex justify-between items-center mb-2.5"> {/* mb-3 to mb-2.5 */}
+          <h2 className="text-lg font-semibold flex items-center"><ImageIcon className="w-4 h-4 mr-1.5 text-primary" /> Image Template</h2> {/* text-xl to text-lg, w-5h-5 to w-4h-4, mr-2 to mr-1.5 */}
+           <Link href="/explore/templates" legacyBehavior><a className="text-xs text-primary hover:underline flex items-center">See All <ChevronRight className="w-3 h-3 ml-1" /></a></Link> {/* text-sm to text-xs, w-4h-4 to w-3h-3 */}
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3"> {/* gap-4 to gap-3 */}
           {imageTemplates.map((image) => (
             <ImageCard key={image.id} image={image} variant="medium" />
           ))}
@@ -89,17 +91,17 @@ export default function HomePage() {
 
       {/* Get Inspired from Community Section */}
       <section>
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-xl font-semibold flex items-center"><Users className="w-5 h-5 mr-2 text-primary" /> Get Inspired from Community</h2>
-          <Link href="/explore/community" legacyBehavior><a className="text-sm text-primary hover:underline flex items-center">See All <ChevronRight className="w-4 h-4 ml-1" /></a></Link>
+        <div className="flex justify-between items-center mb-2.5"> {/* mb-3 to mb-2.5 */}
+          <h2 className="text-lg font-semibold flex items-center"><Users className="w-4 h-4 mr-1.5 text-primary" /> Get Inspired from Community</h2> {/* text-xl to text-lg, w-5h-5 to w-4h-4, mr-2 to mr-1.5 */}
+          <Link href="/explore/community" legacyBehavior><a className="text-xs text-primary hover:underline flex items-center">See All <ChevronRight className="w-3 h-3 ml-1" /></a></Link> {/* text-sm to text-xs, w-4h-4 to w-3h-3 */}
         </div>
-        <div className="space-y-4">
+        <div className="space-y-3"> {/* space-y-4 to space-y-3 */}
           {communityInspirations.map((image) => (
             <ImageCard key={image.id} image={image} variant="large" />
           ))}
         </div>
       </section>
-       <footer className="text-center py-6 text-muted-foreground text-sm">
+       <footer className="text-center py-4 text-muted-foreground text-xs"> {/* py-6 to py-4, text-sm to text-xs */}
         <p>&copy; {new Date().getFullYear()} Artifex. All rights reserved.</p>
       </footer>
     </div>
