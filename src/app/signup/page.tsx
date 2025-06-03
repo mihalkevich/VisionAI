@@ -11,11 +11,18 @@ import { useRouter } from "next/navigation";
 export default function SignUpPage() {
   const router = useRouter();
 
+  const handleSignUp = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add actual sign up logic here
+    // For now, just navigate to home
+    router.push('/home');
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
         <div className="relative flex items-center justify-center">
-          <Button variant="ghost" size="icon" className="absolute left-0 text-muted-foreground hover:text-primary" onClick={() => router.back()}>
+          <Button variant="ghost" size="icon" className="absolute left-0 text-muted-foreground hover:text-primary" onClick={() => router.push('/auth')}>
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <h1 className="text-xl font-semibold text-center">Create Your Account</h1>
@@ -25,7 +32,7 @@ export default function SignUpPage() {
           Fill the details below to create your Artifex account.
         </p>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSignUp}>
           <div>
             <Label htmlFor="fullname" className="form-label">Fullname</Label>
             <Input id="fullname" type="text" placeholder="Tara Wilson" className="form-input" />

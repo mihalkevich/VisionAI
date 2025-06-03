@@ -69,10 +69,65 @@ export default function GeneratePage() {
     }
   };
 
-  const onImprovePrompt = async () => { /* ... same as before ... */ };
-  const onGenerateVariations = async () => { /* ... same as before ... */ };
-  const handleUseImprovedPrompt = () => { /* ... same as before ... */ };
-  const handleUseVariation = (variation: string) => { /* ... same as before ... */ };
+  const onImprovePrompt = async () => {
+    if (!originalPrompt.trim()) {
+      setErrorImprove("Prompt cannot be empty.");
+      return;
+    }
+    setErrorImprove(null);
+    startImproveTransition(async () => {
+      try {
+        const result = await handleImprovePromptAction(originalPrompt);
+        if (result.improvedPrompt.startsWith("Error:")) {
+            setErrorImprove(result.improvedPrompt)
+            setImprovedPromptText(null);
+        } else {
+            setImprovedPromptText(result.improvedPrompt);
+            toast({ title: "Prompt Improved!", description: "Suggestion applied to the display prompt." });
+        }
+      } catch (err) {
+        const error = err as Error;
+        setErrorImprove(error.message || "Failed to improve prompt.");
+        setImprovedPromptText(null);
+      }
+    });
+  };
+
+  const onGenerateVariations = async () => {
+    if (!originalPrompt.trim()) {
+      setErrorVariations("Prompt cannot be empty.");
+      return;
+    }
+    setErrorVariations(null);
+    startVariationsTransition(async () => {
+      try {
+        const result = await handleGenerateVariationsAction(originalPrompt, 3);
+         if (result.variations.length > 0 && result.variations[0].startsWith("Error:")) {
+            setErrorVariations(result.variations[0]);
+            setPromptVariationsList([]);
+        } else {
+            setPromptVariationsList(result.variations);
+            toast({ title: "Variations Generated!", description: "Suggestions are available below." });
+        }
+      } catch (err) {
+        const error = err as Error;
+        setErrorVariations(error.message || "Failed to generate variations.");
+        setPromptVariationsList([]);
+      }
+    });
+  };
+  
+  const handleUseImprovedPrompt = () => {
+    if (improvedPromptText) {
+      setDisplayPrompt(improvedPromptText);
+      toast({ title: "Using Improved Prompt", description: "The improved prompt is now set for generation." });
+    }
+  };
+  
+  const handleUseVariation = (variation: string) => {
+    setDisplayPrompt(variation);
+    toast({ title: "Using Variation", description: "The selected variation is now set for generation." });
+  };
   
   const handleActualGenerateImages = () => {
     if (!displayPrompt.trim()) {
@@ -112,7 +167,7 @@ export default function GeneratePage() {
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <h1 className="text-lg font-semibold">Generated Images</h1>
-          <div className="w-8"></div>
+          <div className="w-8"></div> {/* Placeholder for right side balance */}
         </header>
         <div className="px-4">
             <NextImage 
@@ -169,7 +224,60 @@ export default function GeneratePage() {
         </CardContent>
       </Card>
       
-      {/* AI Assist buttons can be added here if needed, similar to previous design */}
+       {/* AI Assist Card */}
+       {(originalPrompt.trim() || improvedPromptText || promptVariationsList.length > 0 || errorImprove || errorVariations) && (
+        <Card className="shadow-md rounded-xl">
+          <CardHeader>
+            <CardTitle className="text-base flex items-center"><Sparkles className="w-4 h-4 mr-2 text-primary" /> AI Assistance</CardTitle>
+            <CardDescription className="text-xs">Let AI help you craft the perfect prompt.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Button 
+                onClick={onImprovePrompt} 
+                disabled={isImproving || !originalPrompt.trim()}
+                variant="outline"
+                className="w-full justify-start text-left border-dashed border-primary/50 text-primary hover:bg-primary/10 hover:text-primary"
+              >
+                {isImproving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
+                Improve Prompt
+              </Button>
+              {errorImprove && <p className="text-xs text-destructive px-1">{errorImprove}</p>}
+              {improvedPromptText && (
+                <Alert variant="default" className="bg-primary/5 border-primary/30">
+                  <AlertTitle className="text-xs font-semibold text-primary">Improved Suggestion:</AlertTitle>
+                  <AlertDescription className="text-xs text-foreground/80">{improvedPromptText}</AlertDescription>
+                  <Button onClick={handleUseImprovedPrompt} size="sm" variant="link" className="p-0 h-auto text-xs text-primary mt-1">Use this prompt</Button>
+                </Alert>
+              )}
+            </div>
+            <Separator />
+            <div className="space-y-2">
+               <Button 
+                onClick={onGenerateVariations} 
+                disabled={isGeneratingVariations || !originalPrompt.trim()}
+                variant="outline"
+                className="w-full justify-start text-left border-dashed border-primary/50 text-primary hover:bg-primary/10 hover:text-primary"
+              >
+                {isGeneratingVariations ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
+                Generate Variations
+              </Button>
+              {errorVariations && <p className="text-xs text-destructive px-1">{errorVariations}</p>}
+              {promptVariationsList.length > 0 && (
+                <div className="space-y-1.5">
+                  {promptVariationsList.map((variation, index) => (
+                    <Alert key={index} variant="default" className="bg-card border-border">
+                      <AlertDescription className="text-xs text-foreground/80">{variation}</AlertDescription>
+                      <Button onClick={() => handleUseVariation(variation)} size="sm" variant="link" className="p-0 h-auto text-xs text-primary mt-1">Use this variation</Button>
+                    </Alert>
+                  ))}
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
 
       <section>
         <Label className="form-label mb-2">Choose a style</Label>
