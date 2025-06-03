@@ -1,5 +1,4 @@
 // src/app/(app)/profile/page.tsx (Redesigned Profile Page)
-"use href"; // This should be "use client"
 "use client";
 
 
@@ -9,27 +8,37 @@ import type { GeneratedImage } from "@/types";
 import { Settings, Edit2, Grid3X3, Heart, Bookmark, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useRouter } from "next/navigation"; // Changed from next/navigation
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast"; // Added useToast import
 
 
 // Mock data
 const userGeneratedImages: GeneratedImage[] = [
-  { id: "user1", prompt: "Mystical Cat in a Neon Forest", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "mystical cat" },
-  { id: "user2", prompt: "Space Explorer discovering new galaxy", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "space explorer" },
-  { id: "user3", prompt: "Abstract representation of City Sounds", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "abstract city" },
-  { id: "user4", prompt: "Cute Robot Companion with a flower", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "robot flower" },
-  { id: "user5", prompt: "Enchanted Forest with glowing mushrooms", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "enchanted forest" },
-  { id: "user6", prompt: "Retro Neon Dreams of the 80s", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "neon dreams" },
+  { id: "user1", prompt: "Mystical Cat in a Neon Forest", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "mystical cat" },
+  { id: "user2", prompt: "Space Explorer discovering new galaxy", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "space explorer" },
+  { id: "user3", prompt: "Abstract representation of City Sounds", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "abstract city" },
+  { id: "user4", prompt: "Cute Robot Companion with a flower", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "robot flower" },
+  { id: "user5", prompt: "Enchanted Forest with glowing mushrooms", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "enchanted forest" },
+  { id: "user6", prompt: "Retro Neon Dreams of the 80s", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "neon dreams" },
 ];
 
 const userLikedImages: GeneratedImage[] = [
-    { id: "liked1", prompt: "Liked Artwork: Serene Mountain Peak", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "mountain peak" },
-    { id: "liked2", prompt: "Liked Artwork: Underwater Coral City", imageUrl: "https://placehold.co/400x400.png", model: "Artifex", timestamp: new Date(), dataAiHint: "coral city" },
+    { id: "liked1", prompt: "Liked Artwork: Serene Mountain Peak", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "mountain peak" },
+    { id: "liked2", prompt: "Liked Artwork: Underwater Coral City", imageUrl: "https://placehold.co/400x400.png", model: "Artifex AI", timestamp: new Date(), dataAiHint: "coral city" },
 ];
 
 
 export default function ProfilePage() {
   const router = useRouter();
+  const { toast } = useToast(); // Initialize useToast
+
+  const handleSettingsClick = () => {
+    toast({
+      title: "Coming Soon!",
+      description: "Settings page is under development.",
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 space-y-6">
       <header className="flex items-center justify-between relative">
@@ -37,7 +46,7 @@ export default function ProfilePage() {
             <ChevronLeft className="w-6 h-6" />
           </Button>
          <h1 className="text-xl font-semibold text-center flex-grow">Profile</h1>
-        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary -mr-2">
+        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary -mr-2" onClick={handleSettingsClick}>
           <Settings className="w-5 h-5" />
         </Button>
       </header>
@@ -72,13 +81,6 @@ export default function ProfilePage() {
         </div>
       </section>
       
-      {/* Optional "View Pricing" button can be added if needed, or link to settings */}
-      {/* <Link href="/pricing" legacyBehavior passHref>
-          <Button variant="outline" className="w-full bg-primary/10 border-primary text-primary hover:bg-primary/20 text-sm">
-            <ExternalLink className="w-4 h-4 mr-2" />
-            View Pricing Plans / Upgrade
-          </Button>
-      </Link> */}
 
       <Tabs defaultValue="creations" className="w-full">
         <TabsList className="grid w-full grid-cols-3 bg-card p-1 h-auto rounded-xl">

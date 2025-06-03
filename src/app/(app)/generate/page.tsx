@@ -1,14 +1,14 @@
 // src/app/(app)/generate/page.tsx (Redesigned Generate Page - Screen 7 & 8 elements)
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useEffect, ChangeEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Wand2, Sparkles, RefreshCw, Loader2, Info, ChevronLeft, Download, Share2, Image as ImageIcon, Square, Settings2 } from "lucide-react";
+import { Wand2, Sparkles, RefreshCw, Loader2, ChevronLeft, Download, Share2, Image as ImageIcon, Square, Settings2, UploadCloud } from "lucide-react";
 import { handleImprovePromptAction, handleGenerateVariationsAction } from "@/lib/actions";
 import type { GeneratedImage } from "@/types";
 import { useToast } from "@/hooks/use-toast";
@@ -53,6 +53,8 @@ export default function GeneratePage() {
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null);
   const [selectedShape, setSelectedShape] = useState<string>(shapeOptions[0].value);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+
 
   const { toast } = useToast();
 
@@ -130,8 +132,8 @@ export default function GeneratePage() {
   };
   
   const handleActualGenerateImages = () => {
-    if (!displayPrompt.trim()) {
-      toast({ title: "Prompt is empty", description: "Please enter or select a prompt to generate images.", variant: "destructive" });
+    if (!displayPrompt.trim() && !uploadedImage) {
+      toast({ title: "Input is empty", description: "Please enter a prompt or upload an image to generate.", variant: "destructive" });
       return;
     }
     startImageGenerationTransition(async () => {
@@ -158,6 +160,19 @@ export default function GeneratePage() {
     setImprovedPromptText(null);
     setPromptVariationsList([]);
   }
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      toast({ title: "Image Selected", description: `${file.name} is ready to be used.`});
+    }
+  };
+
 
   if (generatedImages.length > 0) {
     return (
@@ -189,7 +204,6 @@ export default function GeneratePage() {
         <p className="text-xs text-muted-foreground text-center px-4 pt-2">
           {generatedImages.length} of 4 images generated. Generated on {new Date().toLocaleDateString()}
         </p>
-        {/* Thumbnails can be added here */}
       </div>
     );
   }
@@ -223,8 +237,42 @@ export default function GeneratePage() {
           </Button>
         </CardContent>
       </Card>
+
+      <Card className="shadow-md rounded-xl">
+          <CardHeader>
+            <CardTitle className="text-base flex items-center"><UploadCloud className="w-4 h-4 mr-2 text-primary" /> Upload Your Image (Optional)</CardTitle>
+            <CardDescription className="text-xs">Use your own image as a reference or starting point.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-center w-full">
+              <label
+                htmlFor="dropzone-file"
+                className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer bg-card hover:bg-muted border-border hover:border-primary/50 transition-colors"
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <UploadCloud className="w-8 h-8 mb-2 text-muted-foreground" />
+                  <p className="mb-1 text-sm text-muted-foreground">
+                    <span className="font-semibold">Click to upload</span> or drag & drop
+                  </p>
+                  <p className="text-2xs text-muted-foreground">PNG, JPG, GIF up to 5MB</p>
+                </div>
+                <input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} accept="image/png, image/jpeg, image/gif" />
+              </label>
+            </div>
+            {uploadedImage && (
+              <div className="mt-3 text-center">
+                <p className="text-xs font-medium mb-1 text-muted-foreground">Image Preview:</p>
+                <div className="inline-block relative">
+                    <NextImage src={uploadedImage} alt="Uploaded preview" width={128} height={128} className="rounded-md object-contain border border-border max-h-32" />
+                    <Button variant="destructive" size="icon" onClick={() => setUploadedImage(null)} className="absolute -top-2 -right-2 w-6 h-6 rounded-full shadow-md">
+                        <RefreshCw className="w-3 h-3"/>
+                    </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       
-       {/* AI Assist Card */}
        {(originalPrompt.trim() || improvedPromptText || promptVariationsList.length > 0 || errorImprove || errorVariations) && (
         <Card className="shadow-md rounded-xl">
           <CardHeader>
@@ -313,7 +361,7 @@ export default function GeneratePage() {
         <Button 
             size="lg" 
             onClick={handleActualGenerateImages} 
-            disabled={isGeneratingImages || !displayPrompt.trim()} 
+            disabled={isGeneratingImages || (!displayPrompt.trim() && !uploadedImage) } 
             className="w-full h-14 text-base bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-primary-glow"
         >
           {isGeneratingImages ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Wand2 className="mr-2 h-5 w-5" />}
