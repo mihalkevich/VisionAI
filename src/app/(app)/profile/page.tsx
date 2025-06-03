@@ -5,11 +5,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ImageCard from "@/components/ImageCard";
 import type { GeneratedImage } from "@/types";
-import { Settings, Edit2, Grid3X3, Heart, Bookmark, ChevronLeft } from "lucide-react";
+import { Settings, Edit2, Grid3X3, Heart, Bookmark, ChevronLeft, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast"; // Added useToast import
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 
 // Mock data
@@ -30,13 +35,9 @@ const userLikedImages: GeneratedImage[] = [
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { toast } = useToast(); // Initialize useToast
 
-  const handleSettingsClick = () => {
-    toast({
-      title: "Coming Soon!",
-      description: "Settings page is under development.",
-    });
+  const handleLogout = () => {
+    router.push('/auth');
   };
 
   return (
@@ -46,9 +47,19 @@ export default function ProfilePage() {
             <ChevronLeft className="w-6 h-6" />
           </Button>
          <h1 className="text-xl font-semibold text-center flex-grow">Profile</h1>
-        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary -mr-2" onClick={handleSettingsClick}>
-          <Settings className="w-5 h-5" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary -mr-2">
+              <Settings className="w-5 h-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Logout</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </header>
 
       <section className="flex flex-col items-center text-center space-y-3 p-4 bg-card rounded-xl shadow-lg">
